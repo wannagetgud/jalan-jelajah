@@ -11,6 +11,30 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "image-login": "url('/background.png')",
+      },
+      screens: {
+        fold: "280px",
+      },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+      },
+      fontSize: {
+        "2xs": "9px",
+      },
+      colors: {
+        "c-textwhite": "#F6F6F6",
+        "c-textblack": "#272D2F",
+        "c-orange": "#FF7143",
+        "c-white": "#FAFAFA",
+        "c-pink1": "#FD3163",
+        "c-pink2": "#EF2E5F",
+        "c-blue": "#0D92EB",
+        "c-grey": "#E9E9E9",
+      },
+      boxShadow: {
+        card: "3px 4px 10px 4px rgba(0, 0, 0, 0.1)",
+        home: "6px 6px 20px 2px rgba(0, 0, 0, 0.1);",
       },
     },
   },
