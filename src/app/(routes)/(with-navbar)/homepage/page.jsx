@@ -10,7 +10,7 @@ export default function Homepage() {
   const [isModeCategory, setIsModeCategory] = useState(true);
 
   return (
-    <div className="flex container mx-auto h-[90vh]">
+    <div className="flex container mx-auto h-[90vh] justify-center">
       <div className="w-[544px] mr-[132px] flex flex-col justify-center gap-8">
         <p className="text-8xl font-semibold">Explore Beautiful Indonesia</p>
 
