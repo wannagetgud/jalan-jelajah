@@ -11,7 +11,8 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "image-login": "url('/background.png')",
+        "image-login": "url('/assets/background.png')",
+        "image-profile": "url('/assets/bottom-image-profile.png')",
       },
       screens: {
         fold: "280px",
@@ -31,6 +32,7 @@ module.exports = {
         "c-pink2": "#EF2E5F",
         "c-blue": "#0D92EB",
         "c-grey": "#E9E9E9",
+        "c-grey2": "36B6B6B",
       },
       boxShadow: {
         card: "3px 4px 10px 4px rgba(0, 0, 0, 0.1)",

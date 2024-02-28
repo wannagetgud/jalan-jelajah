@@ -4,8 +4,8 @@ export default function withNavbarLayout({ children }) {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-c-white pt-16 text-c-textblack">
-        <div>{children}</div>
+      <div className="bg-c-white text-c-textblack flex items-center justify-center">
+        <div className="">{children}</div>
       </div>
     </>
   );
