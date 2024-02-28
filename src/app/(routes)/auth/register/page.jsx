@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Button from "@/app/components/common/button";
-import InputBar from "@/app/components/common/inputBar";
+import Button from "@/app/_components/common/button";
+import InputBar from "@/app/_components/common/inputBar";
 
 export default function Register() {
   return (
