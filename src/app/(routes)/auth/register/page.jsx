@@ -1,10 +1,53 @@
 "use client";
 
+import { useState, useContext } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { toast } from "react-toastify";
 import Button from "@/app/_components/common/button";
 import InputBar from "@/app/_components/common/inputBar";
+import { AuthContext } from "@/app/_context/authContext";
 
 export default function Register() {
+  const router = useRouter();
+  const { login } = useContext(AuthContext);
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+    email: "",
+    name: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/auth/signUp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error);
+      }
+
+      const data = await response.json();
+      console.log(data);
+      login(data);
+      toast.success("Register success");
+      router.push("/homepage");
+    } catch (error) {
+      toast.error(error.msg);
+    }
+  };
+
   return (
     <>
       <div className="min-h-screen flex flex-col items-center justify-center bg-image-login font-poppins text-c-textwhite">
@@ -15,28 +58,36 @@ export default function Register() {
               inputName="email"
               labelText="Email"
               placeholderText="Masukkan email"
+              inputValue={formData.email}
+              handleChange={handleChange}
             />
 
             <InputBar
               inputName="username"
               labelText="Username"
               placeholderText="Masukkan username"
+              inputValue={formData.username}
+              handleChange={handleChange}
             />
 
             <InputBar
               inputName="name"
               labelText="Nama"
               placeholderText="Masukkan nama"
+              inputValue={formData.name}
+              handleChange={handleChange}
             />
 
             <InputBar
               inputName="password"
               labelText="Password"
               placeholderText="Masukkan password"
+              inputValue={formData.password}
+              handleChange={handleChange}
             />
 
             <div className="flex flex-col items-center mt-8">
-              <Button>DAFTAR</Button>
+              <Button onClick={handleSubmit}>DAFTAR</Button>
               <p className="mt-4">
                 Sudah memiliki akun?{" "}
                 <span className="text-[#bf002f]">
