@@ -16,7 +16,7 @@ export default function InputBar({
           className={`w-full text-xl bg-c-grey
                                 text-black rounded-[20px]
                                 focus:outline-none focus:ring-0 mt-2 p-6 ${className}`}
-          type="text"
+          type={inputName === "password" ? "password" : "text"}
           name={inputName}
           value={inputValue}
           onChange={handleChange}

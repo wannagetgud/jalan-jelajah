@@ -1,4 +1,6 @@
 import { Poppins } from "next/font/google";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "@/app/globals.css";
 
 const poppins = Poppins({
@@ -15,7 +17,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        <ToastContainer></ToastContainer>
+        {children}
+      </body>
     </html>
   );
 }

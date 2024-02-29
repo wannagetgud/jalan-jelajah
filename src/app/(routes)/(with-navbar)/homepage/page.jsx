@@ -19,76 +19,114 @@ export default function Homepage() {
           <button
             type="button"
             className={clsx(
-              "w-1/2 rounded-xl",
+              "w-1/2 rounded-lg transition-all duration-300",
               isModeCategory ? "bg-c-pink1 text-white" : ""
             )}
+            onClick={() => setIsModeCategory(true)}
           >
             Kategori
           </button>
           <button
             type="button"
             className={clsx(
-              "w-1/2 rounded-xl",
+              "w-1/2 rounded-lg transition-all duration-300",
               !isModeCategory ? "bg-c-pink1 text-white" : ""
             )}
+            onClick={() => setIsModeCategory(false)}
           >
             Keyword
           </button>
         </div>
 
         {/* Box Input */}
-        <div className="rounded-xl bg-white shadow-home flex justify-between h-20">
-          <div className="px-4 py-4 h-full ml-4">
-            <label className="text-base font-semibold mb-4 w-1/2">
-              Tipe Wisata Pilihanmu
-            </label>
-            <select
-              name="category"
-              id="category"
-              className="text-lg text-c-pink1 font-medium"
-              // onBlur={handleChange}
+        {isModeCategory ? (
+          <div className="rounded-xl bg-white shadow-home flex justify-between h-20">
+            <div className="px-4 py-4 h-full ml-4">
+              <label className="text-base font-semibold mb-4 w-1/2">
+                Tipe Wisata Pilihanmu
+              </label>
+              <select
+                name="category"
+                id="category"
+                className="text-lg text-c-pink1 font-medium"
+                // onBlur={handleChange}
+              >
+                <option value="Taman Hiburan" className="text-lg">
+                  Taman Hiburan
+                </option>
+                <option value="Budaya" className="text-lg">
+                  Budaya
+                </option>
+                <option value="Cagar Alam" className="text-lg">
+                  Cagar Alam
+                </option>
+                <option value="Bahari" className="text-lg">
+                  Bahari
+                </option>
+                <option value="Tempat Ibadah" className="text-lg">
+                  Tempat Ibadah
+                </option>
+                <option value="Pusat Perbelanjaan" className="text-lg">
+                  Pusat Perbelanjaan
+                </option>
+              </select>
+            </div>
+            <div className="py-2">
+              <hr vertical="true" className="bg-c-pink1 w-[4px] h-full" />
+            </div>
+            <div className="px-4 py-4 h-full">
+              <label className="text-base font-semibold mb-4">Kota Kamu</label>
+              <select
+                name="city"
+                id="city"
+                className="text-lg text-c-pink1 font-medium items-center w-full"
+                // onBlur={handleChange}
+              >
+                <option value="Jakarta" className="text-lg">
+                  Jakarta
+                </option>
+                <option value="Bandung" className="text-lg">
+                  Bandung
+                </option>
+                <option value="Semarang" className="text-lg">
+                  Semarang
+                </option>
+                <option value="Surabaya" className="text-lg">
+                  Surabaya
+                </option>
+                <option value="Yogyakarta" className="text-lg">
+                  Yogyakarta
+                </option>
+              </select>
+            </div>
+            <Link
+              href="/result"
+              className="bg-c-pink1 flex items-center justify-center p-3 rounded-r-xl"
+              //onClick={() => handleClick()}
             >
-              <option value="Taman Hiburan" className="text-lg">
-                Taman Hiburan
-              </option>
-              <option value="Budaya" className="text-lg">
-                Budaya
-              </option>
-              <option value="Cagar Alam" className="text-lg">
-                Cagar Alam
-              </option>
-              <option value="Bahari" className="text-lg">
-                Bahari
-              </option>
-              <option value="Tempat Ibadah" className="text-lg">
-                Tempat Ibadah
-              </option>
-              <option value="Pusat Perbelanjaan" className="text-lg">
-                Pusat Perbelanjaan
-              </option>
-            </select>
+              <Search size={32} color="white" />
+            </Link>
           </div>
-          <div className="py-2">
-            <hr vertical="true" className="bg-c-pink1 w-[4px] h-full" />
+        ) : (
+          <div className="rounded-xl bg-white shadow-home flex w-full justify-between h-20">
+            <div className="px-4 py-4 h-full ml-4 w-full">
+              <input
+                type="text"
+                name="place_name"
+                id="place_name"
+                placeholder="Masukkan nama tempat favorit"
+                className="w-full py-2 text-lg text-c-pink1 font-medium pl-2"
+              />
+            </div>
+            <Link
+              href="/result"
+              className="bg-c-pink1 flex items-center justify-center p-3 rounded-r-xl align-self-end"
+              //onClick={() => handleClick()}
+            >
+              <Search size={32} color="white" />
+            </Link>
           </div>
-          <div className="px-4 py-4 h-full">
-            <label className="text-base font-semibold mb-4">Kota Kamu</label>
-            <input
-              name="city"
-              id="city"
-              className="text-lg font-medium items-center w-full text-c-pink1"
-              placeholder="Jakarta"
-              // onChange={handleChange}
-            />
-          </div>
-          <Link
-            href="/result"
-            className="bg-c-pink1 flex items-center justify-center p-3 rounded-r-xl"
-            //   onClick={() => handleClick()}
-          >
-            <Search size={32} color="white" />
-          </Link>
-        </div>
+        )}
       </div>
       <div className="flex items-center">
         <Image
