@@ -3,13 +3,19 @@
 import { useState, useContext, useEffect } from "react";
 import { Bookmark } from "lucide-react";
 import { generateGoogleMapsLink, truncate } from "@/app/_utils";
-import DetailDest from "@/app/_components/result/detailDest";
 import { AuthContext } from "@/app/_context/authContext";
+import DetailDest from "@/app/_components/result/detailDest";
+import DeletePopup from "@/app/_components/bookmarks/deleteModal";
 
 export default function Bookmarks() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [places, setPlaces] = useState([]);
   const [selectedId, setSelectedId] = useState(1);
+
+  const [places, setPlaces] = useState([]);
+
+  const [toDeleteId, setToDeleteId] = useState(null);
+  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(null);
+
   const { token, isLoading } = useContext(AuthContext);
 
   const fetchBookmark = async () => {
@@ -42,16 +48,15 @@ export default function Bookmarks() {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    console.log(places);
-  }, [places]);
-
-  const removePlaceFromBookmark = (place) => {
-    // JANGAN LUPA
-  };
-
   return (
     <>
+      <DeletePopup
+        isDeleting={isModalDeleteOpen}
+        placeId={toDeleteId}
+        token={token}
+        onClose={() => setIsModalDeleteOpen(false)}
+        refetch={fetchBookmark}
+      />
       <div className="min-h-screen bg-c-white pb-12 container mx-auto">
         <div className="flex w-full justify-between items-center pt-32">
           <div className="flex flex-col text-c-textblack">
@@ -61,7 +66,7 @@ export default function Bookmarks() {
           </div>
         </div>
 
-        {isLoading && <div className="text-3xl">Loading</div>}
+        {isLoading && <div className="text-3xl">Loading...</div>}
         {token && (
           <ul className="mt-12 grid xl:grid-cols-2 gap-6">
             {places?.map((place, index) => {
@@ -76,7 +81,12 @@ export default function Bookmarks() {
                         {place.place_name}
                       </p>
 
-                      <button onClick={() => setPlaceToSave(place)}>
+                      <button
+                        onClick={() => {
+                          setToDeleteId(place.placeId);
+                          setIsModalDeleteOpen(true);
+                        }}
+                      >
                         <Bookmark size={32} fill="black" />
                       </button>
                     </div>
