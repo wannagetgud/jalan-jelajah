@@ -5,13 +5,13 @@ import { Bookmark } from "lucide-react";
 import { generateGoogleMapsLink, truncate } from "@/app/_utils";
 import DetailDest from "@/app/_components/result/detailDest";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import markerIcon from "leaflet/dist/images/marker-icon.png";
-import markerIconRetina from "leaflet/dist/images/marker-icon-2x.png";
-import markerShadow from "leaflet/dist/images/marker-shadow.png";
-
 import { CommonContext } from "@/app/_context/commonContext";
+import dynamic from "next/dynamic";
+
+const Maps = dynamic(() => import("./map.jsx"), {
+  ssr: false,
+});
+
 export default function Result() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
@@ -112,23 +112,4 @@ export default function Result() {
   );
 }
 
-const Maps = ({ lat, long }) => {
-  return (
-    <MapContainer
-      center={[lat, long]}
-      zoom={13}
-      scrollWheelZoom={false}
-      className="h-[50vh] rounded-xl mt-12 shadow-card z-30"
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker position={[lat, long]}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
-    </MapContainer>
-  );
-};
+
