@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Search } from "lucide-react";
@@ -8,16 +9,19 @@ import clsx from "clsx";
 import placeNames from "@/app/_data/placeNames";
 import { toast } from "react-toastify";
 import Button from "@/app/_components/common/button";
+import { CommonContext } from "@/app/_context/commonContext";
 
 export default function Homepage() {
   const [isModeCategory, setIsModeCategory] = useState(true);
   const [keyword, setKeyword] = useState("");
   const [showSuggestion, setShowSuggestion] = useState(false);
   const [filteredSuggestion, setFilteredSuggestion] = useState([]);
+  const [redirect, setRedirect] = useState(false);
   const [category, setCategory] = useState({
     type: "Taman Hiburan",
     city: "Jakarta",
   });
+  const { fetchRecommendation } = useContext(CommonContext);
 
   const handleCategoryChange = async (event) => {
     const { name, value } = event.target;
@@ -44,60 +48,13 @@ export default function Homepage() {
     setShowSuggestion(false);
   };
 
-  const handleClick = async () => {
-    try {
-      const requestBody = {
-        category: category.type,
-        city: category.city,
-        count: 10,
-      };
-      const response = await fetch("/api/recommendcbf", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        console.log(data);
-      } else {
-        console.log(data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleClickKeyword = async () => {
-    try {
-      if (!placeNames.includes(keyword)) {
-        throw new Error("Masukkan tempat yang tersedia");
-      }
-      const requestBody = {
-        place_name: keyword,
-      };
-      const response = await fetch("/api/recommendcbf2", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        console.log(data);
-      } else {
-        console.log(data);
-      }
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
+  const router = useRouter();
 
   useEffect(() => {
-    console.log(category);
-  }, [category]);
+    if (redirect) {
+      router.push("/result");
+    }
+  }, [redirect]);
 
   return (
     <div className="flex container mx-auto h-[90vh] justify-center">
@@ -191,7 +148,9 @@ export default function Homepage() {
             </div>
             <Button
               className="bg-c-pink1 flex items-center justify-center p-3 rounded-r-xl"
-              onClick={() => handleClick()}
+              onClick={() =>
+                fetchRecommendation("category", category, keyword, setRedirect)
+              }
             >
               <Search size={32} color="white" />
             </Button>
@@ -224,7 +183,9 @@ export default function Homepage() {
             </div>
             <Button
               className="bg-c-pink1 flex items-center justify-center p-3 rounded-r-xl align-self-end"
-              onClick={() => handleClickKeyword()}
+              onClick={() =>
+                fetchRecommendation("keyword", category, keyword, setRedirect)
+              }
             >
               <Search size={32} color="white" />
             </Button>
