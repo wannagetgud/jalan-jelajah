@@ -13,51 +13,9 @@ import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
 import { CommonContext } from "@/app/_context/commonContext";
 export default function Result() {
-  const [isModalOpen, setIsModalOpen] = useState(true);
-  const [selectedId, setSelectedId] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(0);
   const { isLoading, recommendation } = useContext(CommonContext);
-  const places = [
-    {
-      id: 1,
-      place_name: "Pantai Kuta",
-      city: "Bali",
-      price: "Rp 10.000",
-      lat: -8.715143,
-      long: 115.170124,
-      description:
-        "Pantai Kuta adalah sebuah tempat wisata yang terletak di Kuta, Badung, Bali, Indonesia. Pantai ini terkenal akan pasir putihnya dan ombak yang cocok untuk berselancar.",
-    },
-    {
-      id: 2,
-      place_name: "Pantai Kuta",
-      city: "Bali",
-      price: "Rp 10.000",
-      lat: -8.715143,
-      long: 115.170124,
-      description:
-        "Pantai Kuta adalah sebuah tempat wisata yang terletak di Kuta, Badung, Bali, Indonesia. Pantai ini terkenal akan pasir putihnya dan ombak yang cocok untuk berselancar.",
-    },
-    {
-      id: 3,
-      place_name: "Pantai Kuta",
-      city: "Bali",
-      price: "Rp 10.000",
-      lat: -8.715143,
-      long: 115.170124,
-      description:
-        "Pantai Kuta adalah sebuah tempat wisata yang terletak di Kuta, Badung, Bali, Indonesia. Pantai ini terkenal akan pasir putihnya dan ombak yang cocok untuk berselancar.",
-    },
-    {
-      id: 4,
-      place_name: "Pantai Kuti",
-      city: "Bali",
-      price: "Rp 10.000",
-      lat: -8.715143,
-      long: 115.170124,
-      description:
-        "Pantai Kuta adalah sebuah tempat wisata yang terletak di Kuta, Badung, Bali, Indonesia. Pantai ini terkenal akan pasir putihnya dan ombak yang cocok untuk berselancar.",
-    },
-  ];
 
   const openDetailModal = (id) => {
     setSelectedId(id);
@@ -89,17 +47,17 @@ export default function Result() {
               <p className="text-2xl">
                 Lokasi Kamu:{" "}
                 <span className="font-semibold text-c-pink1">
-                  {places ? places[0].city : ""}
+                  {recommendation ? recommendation[0].city : ""}
                 </span>
               </p>
             </div>
           </div>
 
           {/* Maps */}
-          <Maps lat={places[0].lat} long={places[0].long} />
+          <Maps lat={recommendation[0].lat} long={recommendation[0].long} />
 
           <ul className="mt-12 grid xl:grid-cols-2 gap-6">
-            {places?.map((place, index) => {
+            {recommendation?.map((item, index) => {
               return (
                 <li
                   className="bg-c-white rounded-[25px] shadow-card flex px-10 py-4"
@@ -108,29 +66,29 @@ export default function Result() {
                   <div className="flex flex-col justify-between gap-2">
                     <div className="flex justify-between items-center">
                       <p className="font-semibold text-[28px] text-c-textblack">
-                        {place.place_name}
+                        {item.place_name}
                       </p>
 
-                      <button onClick={() => setPlaceToSave(place)}>
+                      <button onClick={() => setPlaceToSave(item)}>
                         <Bookmark size={32} />
                       </button>
                     </div>
                     <p className="text-lg text-c-textblack">
-                      Harga Tiket Masuk: {place.price}
+                      Harga Tiket Masuk: {item.price}
                     </p>
                     <a
                       rel="noreferrer"
                       target="_blank"
-                      href={generateGoogleMapsLink(place.lat, place.long)}
+                      href={generateGoogleMapsLink(item.lat, item.long)}
                       className="text-c-pink1 font-semibold text-xl underline"
                     >
                       Google Maps
                     </a>
                     <p className="text-xl text-c-grey2 mt-2 text-justify">
-                      {truncate(place.description)}
+                      {truncate(item.description)}
                       <span
                         className="cursor-pointer hover:font-semibold text-c-pink1 ml-2 transition-all"
-                        onClick={() => openDetailModal(place.id)}
+                        onClick={() => openDetailModal(item.id)}
                       >
                         Baca selengkapnya
                       </span>
@@ -143,8 +101,12 @@ export default function Result() {
         </div>
       )}{" "}
       {isLoading && <div>Loading</div>}
-      {isModalOpen && (
-        <DetailDest place={places[selectedId]} closeModal={closeDetailModal} />
+      {recommendation && (
+        <DetailDest
+          recommendation={recommendation[selectedId]}
+          closeModal={closeDetailModal}
+          isModalOpen={isModalOpen}
+        />
       )}
     </>
   );
