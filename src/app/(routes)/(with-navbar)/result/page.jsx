@@ -8,7 +8,7 @@ import DetailDest from "@/app/_components/result/detailDest";
 import { CommonContext } from "@/app/_context/commonContext";
 import dynamic from "next/dynamic";
 
-const Maps = dynamic(() => import("./map.jsx"), {
+const Maps = dynamic(() => import("../../../_components/result/map.jsx"), {
   ssr: false,
 });
 
