@@ -13,9 +13,9 @@ export default function Navbar() {
         <Link className="font-medium text-xl" href="/homepage">
           Beranda
         </Link>
-        <button className="font-medium text-xl" href="/bookmarks">
+        <Link className="font-medium text-xl" href="/bookmarks">
           Tersimpan
-        </button>
+        </Link>
         <Link className="font-medium text-xl" href="/about">
           Tentang Kami
         </Link>

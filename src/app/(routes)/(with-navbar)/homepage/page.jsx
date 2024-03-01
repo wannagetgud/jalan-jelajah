@@ -7,6 +7,7 @@ import { Search } from "lucide-react";
 import clsx from "clsx";
 import placeNames from "@/app/_data/placeNames";
 import { toast } from "react-toastify";
+import Button from "@/app/_components/common/button";
 
 export default function Homepage() {
   const [isModeCategory, setIsModeCategory] = useState(true);
@@ -70,6 +71,9 @@ export default function Homepage() {
 
   const handleClickKeyword = async () => {
     try {
+      if (!placeNames.includes(keyword)) {
+        throw new Error("Masukkan tempat yang tersedia");
+      }
       const requestBody = {
         place_name: keyword,
       };
@@ -87,7 +91,7 @@ export default function Homepage() {
         console.log(data);
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   };
 
@@ -185,13 +189,12 @@ export default function Homepage() {
                 </option>
               </select>
             </div>
-            <Link
-              href="/result"
+            <Button
               className="bg-c-pink1 flex items-center justify-center p-3 rounded-r-xl"
               onClick={() => handleClick()}
             >
               <Search size={32} color="white" />
-            </Link>
+            </Button>
           </div>
         ) : (
           <div className="rounded-xl bg-white shadow-home flex w-full justify-between h-20">
@@ -219,13 +222,12 @@ export default function Homepage() {
                 </ul>
               )}
             </div>
-            <Link
-              href="/result"
+            <Button
               className="bg-c-pink1 flex items-center justify-center p-3 rounded-r-xl align-self-end"
               onClick={() => handleClickKeyword()}
             >
               <Search size={32} color="white" />
-            </Link>
+            </Button>
           </div>
         )}
       </div>
