@@ -1,14 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Search } from "lucide-react";
 import clsx from "clsx";
+import { toast } from "react-toastify";
 
 export default function Homepage() {
   const [isModeCategory, setIsModeCategory] = useState(true);
+  const [category, setCategory] = useState({
+    type: "Taman Hiburan",
+    city: "Jakarta",
+  });
 
+  const handleCategoryChange = async (event) => {
+    const { name, value } = event.target;
+    setCategory({
+      ...category,
+      [name]: value,
+    });
+  };
+
+  const handleClick = async () => {
+    try {
+      const requestBody = {
+        category: category.type,
+        city: category.city,
+        count: 10,
+      };
+      const response = await fetch("http://34.139.96.186:8080/recommendcbf", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        console.log(data);
+      } else {
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    console.log(category);
+  }, [category]);
   return (
     <div className="flex container mx-auto h-[90vh] justify-center">
       <div className="w-[544px] mr-[132px] flex flex-col justify-center gap-8">
@@ -46,10 +86,11 @@ export default function Homepage() {
                 Tipe Wisata Pilihanmu
               </label>
               <select
-                name="category"
+                name="type"
                 id="category"
                 className="text-lg text-c-pink1 font-medium"
                 // onBlur={handleChange}
+                onChange={handleCategoryChange}
               >
                 <option value="Taman Hiburan" className="text-lg">
                   Taman Hiburan
@@ -81,6 +122,7 @@ export default function Homepage() {
                 id="city"
                 className="text-lg text-c-pink1 font-medium items-center w-full"
                 // onBlur={handleChange}
+                onChange={handleCategoryChange}
               >
                 <option value="Jakarta" className="text-lg">
                   Jakarta
@@ -102,7 +144,7 @@ export default function Homepage() {
             <Link
               href="/result"
               className="bg-c-pink1 flex items-center justify-center p-3 rounded-r-xl"
-              //onClick={() => handleClick()}
+              onClick={() => handleClick()}
             >
               <Search size={32} color="white" />
             </Link>
