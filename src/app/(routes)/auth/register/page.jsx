@@ -41,7 +41,7 @@ export default function Register() {
       const data = await response.json();
       console.log(data);
       login(data);
-      toast.success("Register success");
+      toast.success("Sukses daftar");
       router.push("/homepage");
     } catch (error) {
       toast.error(error.msg);

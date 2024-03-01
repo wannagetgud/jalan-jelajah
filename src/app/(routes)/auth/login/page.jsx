@@ -38,7 +38,7 @@ export default function Login() {
       const data = await response.json();
       console.log(data);
       login(data);
-      toast.success("Login success");
+      toast.success("Sukses login");
       router.push("/homepage");
     } catch (error) {
       toast.error(error.msg);

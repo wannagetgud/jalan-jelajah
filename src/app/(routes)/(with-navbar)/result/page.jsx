@@ -6,6 +6,8 @@ import { generateGoogleMapsLink, truncate } from "@/app/_utils";
 import DetailDest from "@/app/_components/result/detailDest";
 
 import { CommonContext } from "@/app/_context/commonContext";
+import { AuthContext } from "@/app/_context/authContext.js";
+import { toast } from "react-toastify";
 import dynamic from "next/dynamic";
 
 const Maps = dynamic(() => import("../../../_components/result/map.jsx"), {
@@ -16,6 +18,12 @@ export default function Result() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
   const { isLoading, recommendation } = useContext(CommonContext);
+  const { token } = useContext(AuthContext);
+  const [bookmarked, setBookmarked] = useState([]);
+
+  useEffect(() => {
+    console.log(recommendation);
+  }, [recommendation, isLoading]);
 
   const openDetailModal = (id) => {
     setSelectedId(id);
@@ -27,8 +35,38 @@ export default function Result() {
     setIsModalOpen(false);
   };
 
-  const setPlaceToSave = (place) => {
-    console.log(place);
+  const handleAddBookmark = async (place) => {
+    const requestBody = {
+      placeId: `${Math.floor(Math.random() * 10000) + 1000}${place.id}`, // create an id
+      category: place.category,
+      city: place.city,
+      description: place.description,
+      lat: place.lat,
+      long: place.long,
+      place_name: place.place_name,
+      price: place.price,
+      rating: place.rating,
+    };
+
+    try {
+      const response = await fetch("/api/bookmark", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
+      if (!response.ok) {
+        const data = response.json();
+        throw new Error(data.msg);
+      }
+      const data = await response.json();
+      toast.success("Berhasil menyimpan tempat ke bookmark");
+      setBookmarked([...bookmarked, place.id]);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   useEffect(() => {
@@ -69,8 +107,12 @@ export default function Result() {
                         {item.place_name}
                       </p>
 
-                      <button onClick={() => setPlaceToSave(item)}>
-                        <Bookmark size={32} />
+                      <button onClick={() => handleAddBookmark(item)}>
+                        {bookmarked.includes(item.id) ? (
+                          <Bookmark size={32} fill="black" />
+                        ) : (
+                          <Bookmark size={32} />
+                        )}
                       </button>
                     </div>
                     <p className="text-lg text-c-textblack">
@@ -100,7 +142,11 @@ export default function Result() {
           </ul>
         </div>
       )}{" "}
-      {isLoading && <div>Loading</div>}
+      {isLoading && (
+        <div className="min-h-screen w-full text-center mt-12 text-2xl">
+          Loading...
+        </div>
+      )}
       {recommendation && (
         <DetailDest
           recommendation={recommendation[selectedId]}
@@ -111,5 +157,3 @@ export default function Result() {
     </>
   );
 }
-
-
