@@ -1,16 +1,19 @@
 "use client";
 
 import { useContext, useState, useEffect } from "react";
-import Image from "next/image";
-import { AuthContext } from "@/app/_context/authContext";
-import Input from "@/app/_components/profile/input";
 import { toast } from "react-toastify";
+import Image from "next/image";
+import { useRouter, redirect } from "next/navigation";
+import { AuthContext } from "@/app/_context/authContext";
+import Button from "@/app/_components/common/button";
+import Input from "@/app/_components/profile/input";
 
 export default function Profile() {
+  const router = useRouter();
   const [name, setName] = useState("Nama");
   const [username, setUsername] = useState("Username");
   const [email, setEmail] = useState("Email");
-  const { user, isLoading, token } = useContext(AuthContext);
+  const { user, isLoading, token, logout } = useContext(AuthContext);
   useEffect(() => {
     if (user) {
       setName(user.name);
@@ -41,8 +44,13 @@ export default function Profile() {
       toast.error(error.msg);
     }
   };
+  const handleLogout = async () => {
+    logout();
+    router.push("/homepage");
+  };
   return (
     <>
+      {!token && redirect("/auth/login")}
       <div className="h-[80vh] flex items-center justify-center bg-c-white">
         {isLoading && <div className="text-3xl">Loading</div>}
         {user && (
@@ -76,6 +84,12 @@ export default function Profile() {
                 <Input value={username} setValue={setUsername} />
                 <p className="text-c-grey2 mt-2">Email</p>
                 <Input value={email} setValue={setEmail} />
+                <Button
+                  className="mt-4 !mx-0 self-end bg-white shadow-card !text-c-pink1"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
               </div>
             </form>
           </div>

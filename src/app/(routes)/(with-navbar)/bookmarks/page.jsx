@@ -2,6 +2,7 @@
 
 import { useState, useContext, useEffect } from "react";
 import { Bookmark } from "lucide-react";
+import { redirect } from "next/navigation";
 import { generateGoogleMapsLink, truncate } from "@/app/_utils";
 import { AuthContext } from "@/app/_context/authContext";
 import DetailDest from "@/app/_components/result/detailDest";
@@ -50,6 +51,7 @@ export default function Bookmarks() {
 
   return (
     <>
+      {!token && redirect("/auth/login")}
       <DeletePopup
         isDeleting={isModalDeleteOpen}
         placeId={toDeleteId}

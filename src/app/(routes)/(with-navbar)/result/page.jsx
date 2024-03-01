@@ -1,20 +1,22 @@
 "use client";
 
 import { useState, useContext, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Bookmark } from "lucide-react";
-import { generateGoogleMapsLink, truncate } from "@/app/_utils";
-import DetailDest from "@/app/_components/result/detailDest";
-
-import { CommonContext } from "@/app/_context/commonContext";
-import { AuthContext } from "@/app/_context/authContext.js";
 import { toast } from "react-toastify";
 import dynamic from "next/dynamic";
+
+import { generateGoogleMapsLink, truncate } from "@/app/_utils";
+import DetailDest from "@/app/_components/result/detailDest";
+import { CommonContext } from "@/app/_context/commonContext";
+import { AuthContext } from "@/app/_context/authContext.js";
 
 const Maps = dynamic(() => import("../../../_components/result/map.jsx"), {
   ssr: false,
 });
 
 export default function Result() {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
   const { isLoading, recommendation } = useContext(CommonContext);
@@ -36,6 +38,12 @@ export default function Result() {
   };
 
   const handleAddBookmark = async (place) => {
+    if (!token) {
+      toast.error("Anda harus login terlebih dahulu untuk menyimpan tempat");
+      router.push("/auth/login");
+      return;
+    }
+
     const requestBody = {
       placeId: `${Math.floor(Math.random() * 10000) + 1000}${place.id}`, // create an id
       category: place.category,
