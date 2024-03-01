@@ -5,10 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { Search } from "lucide-react";
 import clsx from "clsx";
+import placeNames from "@/app/_data/placeNames";
 import { toast } from "react-toastify";
 
 export default function Homepage() {
   const [isModeCategory, setIsModeCategory] = useState(true);
+  const [keyword, setKeyword] = useState("");
+  const [showSuggestion, setShowSuggestion] = useState(false);
+  const [filteredSuggestion, setFilteredSuggestion] = useState([]);
   const [category, setCategory] = useState({
     type: "Taman Hiburan",
     city: "Jakarta",
@@ -22,6 +26,23 @@ export default function Homepage() {
     });
   };
 
+  const handleKeywordChange = (event) => {
+    const value = event.target.value;
+    setKeyword(value);
+
+    const filtered = placeNames.filter((suggestion) =>
+      suggestion.toLowerCase().includes(value.toLowerCase())
+    );
+
+    setFilteredSuggestion(filtered);
+    setShowSuggestion(filtered.length > 0);
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setKeyword(suggestion);
+    setShowSuggestion(false);
+  };
+
   const handleClick = async () => {
     try {
       const requestBody = {
@@ -29,7 +50,7 @@ export default function Homepage() {
         city: category.city,
         count: 10,
       };
-      const response = await fetch("http://34.139.96.186:8080/recommendcbf", {
+      const response = await fetch("/api/recommendcbf", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,9 +67,34 @@ export default function Homepage() {
       console.log(error);
     }
   };
+
+  const handleClickKeyword = async () => {
+    try {
+      const requestBody = {
+        place_name: keyword,
+      };
+      const response = await fetch("/api/recommendcbf2", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        console.log(data);
+      } else {
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     console.log(category);
   }, [category]);
+
   return (
     <div className="flex container mx-auto h-[90vh] justify-center">
       <div className="w-[544px] mr-[132px] flex flex-col justify-center gap-8">
@@ -89,7 +135,6 @@ export default function Homepage() {
                 name="type"
                 id="category"
                 className="text-lg text-c-pink1 font-medium"
-                // onBlur={handleChange}
                 onChange={handleCategoryChange}
               >
                 <option value="Taman Hiburan" className="text-lg">
@@ -121,7 +166,6 @@ export default function Homepage() {
                 name="city"
                 id="city"
                 className="text-lg text-c-pink1 font-medium items-center w-full"
-                // onBlur={handleChange}
                 onChange={handleCategoryChange}
               >
                 <option value="Jakarta" className="text-lg">
@@ -156,14 +200,29 @@ export default function Homepage() {
                 type="text"
                 name="place_name"
                 id="place_name"
+                value={keyword}
+                onChange={handleKeywordChange}
                 placeholder="Masukkan nama tempat favorit"
                 className="w-full py-2 text-lg text-c-pink1 font-medium pl-2"
               />
+              {showSuggestion && (
+                <ul className="relative top-0 bg-white rounded-b-md h-48 overflow-y-scroll">
+                  {filteredSuggestion.map((suggestion, index) => (
+                    <li
+                      className="py-2 px-2 hover:bg-c-pink1 rounded-md hover:text-white cursor-pointer"
+                      key={index}
+                      onClick={() => handleSuggestionClick(suggestion)}
+                    >
+                      {suggestion}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
             <Link
               href="/result"
               className="bg-c-pink1 flex items-center justify-center p-3 rounded-r-xl align-self-end"
-              //onClick={() => handleClick()}
+              onClick={() => handleClickKeyword()}
             >
               <Search size={32} color="white" />
             </Link>
