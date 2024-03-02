@@ -3,17 +3,18 @@
 import { useContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import Image from "next/image";
-import { useRouter, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import { AuthContext } from "@/app/_context/authContext";
+import { CommonContext } from "@/app/_context/commonContext";
 import Button from "@/app/_components/common/button";
 import Input from "@/app/_components/profile/input";
 
 export default function Profile() {
-  const router = useRouter();
   const [name, setName] = useState("Nama");
   const [username, setUsername] = useState("Username");
   const [email, setEmail] = useState("Email");
   const { user, isLoading, token, logout } = useContext(AuthContext);
+  const { clearRecommendation } = useContext(CommonContext);
   useEffect(() => {
     if (user) {
       setName(user.name);
@@ -44,9 +45,9 @@ export default function Profile() {
       toast.error(error.msg);
     }
   };
-  const handleLogout = async () => {
+  const handleLogout = () => {
     logout();
-    router.push("/homepage");
+    clearRecommendation();
   };
   return (
     <>

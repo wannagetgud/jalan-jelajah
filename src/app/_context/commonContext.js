@@ -56,9 +56,18 @@ export const CommonProvider = ({ children }) => {
       toast.error(error.message);
     }
   };
+  const clearRecommendation = () => {
+    localStorage.removeItem("recommendation");
+    setRecommendation(null);
+  };
   return (
     <CommonContext.Provider
-      value={{ fetchRecommendation, isLoading, recommendation }}
+      value={{
+        fetchRecommendation,
+        clearRecommendation,
+        isLoading,
+        recommendation,
+      }}
     >
       {children}
     </CommonContext.Provider>
