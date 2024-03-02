@@ -66,16 +66,14 @@ export default function Navbar() {
         >
           {menuPhone.map((item) => {
             return (
-              <div
+              <Link
+                href={item.href}
                 key={item.id}
                 className="py-4 hover:bg-c-pink1 hover:text-c-textwhite w-full text-center font-medium"
-                onClick={() => {
-                  handleClickNavbar(item.toSection);
-                  toggleNavbarPhone();
-                }}
+                onClick={toggleNavbarPhone}
               >
                 {item.value}
-              </div>
+              </Link>
             );
           })}
         </div>
