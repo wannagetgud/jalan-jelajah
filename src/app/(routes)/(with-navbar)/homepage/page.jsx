@@ -58,7 +58,7 @@ export default function Homepage() {
 
   return (
     <div className="flex container mx-auto h-[90vh] justify-center">
-      <div className="xl:w-[544px] xl:mr-[132px] flex flex-col justify-center gap-8">
+      <div className="xl:w-[544px] xl:mr-[132px] flex flex-col justify-center gap-8 relative z-10">
         <p className="text-3xl md:text-5xl xl:text-8xl font-semibold">
           Explore <br />
           Beautiful <br />
@@ -91,7 +91,7 @@ export default function Homepage() {
 
         {/* Box Input */}
         {isModeCategory ? (
-          <div className="rounded-xl bg-white shadow-home flex justify-between h-20">
+          <div className="rounded-xl bg-white shadow-home flex max-md:flex-col md:justify-between md:h-20">
             <div className="px-4 py-4 h-full ml-0 md:ml-4">
               <label className="text-sm md:text-base font-semibold mb-4">
                 Tipe Wisata Pilihanmu
@@ -128,7 +128,7 @@ export default function Homepage() {
             <div className="py-2">
               <hr
                 vertical="true"
-                className="bg-c-pink1 w-[2px] md:w-[4px] h-full"
+                className="bg-c-pink1 max-md:w-full max-md:h-[2px] w-[4px] h-full"
               />
             </div>
             <div className="px-4 py-4 h-full w-full">
@@ -159,7 +159,7 @@ export default function Homepage() {
               </select>
             </div>
             <Button
-              className="bg-c-pink1 flex items-center justify-center p-3 rounded-r md:rounded-r-xl max-md:p-1.5"
+              className="bg-c-pink1 flex items-center justify-center p-3 max-md:rounded-none max-md:w-full rounded-r-xl"
               onClick={() =>
                 fetchRecommendation("category", category, keyword, setRedirect)
               }
@@ -168,16 +168,19 @@ export default function Homepage() {
             </Button>
           </div>
         ) : (
-          <div className="rounded-xl bg-white shadow-home flex w-full justify-between h-12 md:h-20">
-            <div className="p-2 md:p-4 h-full md:ml-4">
+          <div className="rounded-xl bg-white shadow-home flex max-md:flex-col w-full justify-between">
+            <div className="px-4 py-4 h-full ml-0 md:ml-4">
+              <label className="text-sm md:text-base font-semibold mb-4">
+                Keyword tempat
+              </label>
               <input
                 type="text"
                 name="place_name"
                 id="place_name"
                 value={keyword}
                 onChange={handleKeywordChange}
-                placeholder="Masukkan keyword tempat"
-                className="w-full py-2 text-sm md:text-lg text-c-pink1 font-medium pl-2"
+                placeholder="Masukkan nama tempat wisata"
+                className="py-2 pl-2 text-sm md:text-lg text-c-pink1 font-medium w-full"
               />
               {showSuggestion && (
                 <ul className="relative top-0 bg-white rounded-b-md h-48 overflow-y-scroll max-md:text-sm">
@@ -194,7 +197,7 @@ export default function Homepage() {
               )}
             </div>
             <Button
-              className="bg-c-pink1 flex items-center justify-center p-3 rounded-r md:rounded-r-xl max-md:p-1.5"
+              className="bg-c-pink1 flex items-center justify-center p-3 max-md:rounded-none max-md:w-full rounded-r-xl"
               onClick={() =>
                 fetchRecommendation("keyword", category, keyword, setRedirect)
               }
@@ -204,7 +207,7 @@ export default function Homepage() {
           </div>
         )}
       </div>
-      <div className="flex items-center max-md:hidden">
+      <div className="flex items-center max-md:fixed max-md:translate-x-36">
         <Image
           src="/assets/hero.png"
           width={500}

@@ -60,7 +60,7 @@ export default function Navbar() {
       {navbarPhoneOpen ? (
         <div
           className={clsx(
-            `absolute top-0 left-0 -z-10 w-full max-h-fit flex flex-col items-center justify-center bg-c-white pt-20 pb-4 navbar-menu shadow-home md:hidden transition-all`,
+            `absolute top-0 left-0 -z-10 w-full max-h-fit flex flex-col items-center justify-center bg-c-white pt-20 pb-4 navbar-menu shadow-home md:hidden transition-all h-screen`,
             navbarPhoneOpen ? "open" : "closed"
           )}
         >
