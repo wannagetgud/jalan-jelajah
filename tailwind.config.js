@@ -27,6 +27,7 @@ module.exports = {
         "c-textwhite": "#F6F6F6",
         "c-textblack": "#272D2F",
         "c-orange": "#FF7143",
+        "C-orange-light": "#FCB29E",
         "c-white": "#FAFAFA",
         "c-pink1": "#FD3163",
         "c-pink2": "#EF2E5F",

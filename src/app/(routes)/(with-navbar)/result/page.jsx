@@ -23,10 +23,6 @@ export default function Result() {
   const { token } = useContext(AuthContext);
   const [bookmarked, setBookmarked] = useState([]);
 
-  useEffect(() => {
-    console.log(recommendation);
-  }, [recommendation, isLoading]);
-
   const openDetailModal = (id) => {
     setSelectedId(id);
     setIsModalOpen(true);
@@ -83,7 +79,7 @@ export default function Result() {
 
   return (
     <>
-      {!isLoading && (
+      {!isLoading ? (
         <div className="min-h-screen bg-c-white pb-12 container mx-auto">
           <div className="flex w-full justify-between items-center pt-32">
             <div className="flex flex-col text-c-textblack">
@@ -100,7 +96,11 @@ export default function Result() {
           </div>
 
           {/* Maps */}
-          <Maps lat={recommendation[0].lat} long={recommendation[0].long} />
+          <Maps
+            lat={recommendation[0].lat}
+            long={recommendation[0].long}
+            places={recommendation}
+          />
 
           <ul className="mt-12 grid xl:grid-cols-2 gap-6">
             {recommendation?.map((item, index) => {
@@ -126,6 +126,9 @@ export default function Result() {
                     <p className="text-lg text-c-textblack">
                       Harga Tiket Masuk: {item.price}
                     </p>
+                    <p className="text-lg text-c-textblack">
+                      Rating: {item.rating}
+                    </p>
                     <a
                       rel="noreferrer"
                       target="_blank"
@@ -149,8 +152,7 @@ export default function Result() {
             })}
           </ul>
         </div>
-      )}{" "}
-      {isLoading && (
+      ) : (
         <div className="min-h-screen w-full text-center mt-12 text-2xl">
           Loading...
         </div>

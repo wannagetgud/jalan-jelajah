@@ -48,8 +48,9 @@ export const CommonProvider = ({ children }) => {
       if (!response.ok) {
         console.log("error");
       } else {
-        setRedirect(true);
         localStorage.setItem("recommendation", JSON.stringify(data));
+        setRecommendation(data);
+        setRedirect(true);
       }
     } catch (error) {
       toast.error(error.message);

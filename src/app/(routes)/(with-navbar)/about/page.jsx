@@ -58,17 +58,17 @@ export default function About() {
 
       <div
         id="description"
-        className="bg-gradient-to-br from-c-pink2 to-c-orange w-full p-16 flex justify-center items-center gap-16"
+        className="bg-gradient-to-br from-c-pink2 to-c-orange-light w-full p-16 flex justify-center items-center gap-16"
       >
         <div className="flex flex-col text-white text-2xl w-1/2">
           <p>
             JalanJelajah bertujuan memberikan ide dan inspirasi tujuan
-            perjalanan Anda dalam menjelajahi Indonesia.
+            perjalanan Anda dalam menjelajahi lima kota besar di Indonesia.
           </p>
           <br />
           <p>
-            Pilih rekomendasi berdasarkan kategori maupun keyword, dan
-            bersiaplah untuk perjalanan yang mengesankan!
+            Pilih rekomendasi berdasarkan kategori maupun keyword nama tempat,
+            dan bersiaplah untuk perjalanan yang mengesankan!
           </p>
         </div>
 
@@ -95,7 +95,7 @@ export default function About() {
 const Card = ({ image, title, desc }) => {
   return (
     <div className="rounded-2xl bg-white shadow-home p-10 flex flex-col gap-6 items-center">
-      <Image src={image} width={168} height={168} />
+      <Image src={image} width={168} height={168} alt="card image" />
       <h1 className="italic font-semibold text-c-pink1 text-2xl">{title}</h1>
       <p className="text-center text-lg">{desc}</p>
     </div>
