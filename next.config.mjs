@@ -3,6 +3,15 @@ const nextConfig = {
   env: {
     API_URL: process.env.API_URL,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "storage.googleapis.com",
+        port: "",
+      },
+    ],
+  },
   async rewrites() {
     return [
       {
