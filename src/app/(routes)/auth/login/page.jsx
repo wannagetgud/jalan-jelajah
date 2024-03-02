@@ -70,7 +70,7 @@ export default function Login() {
               handleChange={handleChange}
             />
 
-            <p className="mt-4">
+            <p className="mt-4 max-md:text-sm">
               <span>Lupa password? </span>
               <span className="text-[#bf002f]">
                 <Link
@@ -84,7 +84,7 @@ export default function Login() {
 
             <div className="flex flex-col items-center mt-8">
               <Button onClick={handleSubmit}>LOGIN</Button>
-              <p className="mt-4">
+              <p className="mt-4 max-md:text-sm">
                 <span>Belum memiliki akun? </span>
                 <span className="text-[#bf002f]">
                   <Link href={"/auth/register"} className="hover:underline">

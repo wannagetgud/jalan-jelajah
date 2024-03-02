@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Navbar Mobile Animation */
+
+.navbar-phone-icon {
+  transition: transform 0.3s ease;
+}
+
+.navbar-phone-icon.open {
+  transform: rotate(90deg);
+}
+
+.navbar-menu {
+  transition: transform 0.8s ease;
+}
+
+.navbar-menu.open {
+  transform: translateY(0);
+}
+
+.navbar-menu.closed {
+  transform: translateY(-100%);
+}

@@ -51,8 +51,8 @@ export default function Register() {
   return (
     <>
       <div className="min-h-screen flex flex-col items-center justify-center bg-image-login font-poppins text-c-textwhite">
-        <h1 className="text-4xl font-semibold">Daftar Sekarang</h1>
-        <div className="bg-c-textwhite rounded-[20px] text-c-textblack justify-center px-9 py-6 mt-6 w-[552px]">
+        <h1 className="text-2xl xl:text-4xl font-semibold">Daftar Sekarang</h1>
+        <div className="bg-c-textwhite rounded-[20px] text-c-textblack justify-center px-9 py-6 mt-6 w-[300px] xl:w-[552px]">
           <form action="" className="">
             <InputBar
               inputName="email"
@@ -88,7 +88,7 @@ export default function Register() {
 
             <div className="flex flex-col items-center mt-8">
               <Button onClick={handleSubmit}>DAFTAR</Button>
-              <p className="mt-4">
+              <p className="mt-4 max-md:text-sm">
                 Sudah memiliki akun?{" "}
                 <span className="text-[#bf002f]">
                   <Link href="/auth/login">Login</Link>
