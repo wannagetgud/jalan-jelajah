@@ -60,26 +60,31 @@ export default function Bookmarks() {
         refetch={fetchBookmark}
       />
       <div className="min-h-screen bg-c-white pb-12 container mx-auto">
-        <div className="flex w-full justify-between items-center pt-32">
+        <div className="flex w-full justify-between items-center pt-16 md:pt-32">
           <div className="flex flex-col text-c-textblack">
-            <p className="text-[28px] font-semibold">
+            <p className="text-lg md:text-[28px] font-semibold">
               Berikut tempat - tempat yang kamu simpan! &#x1F604;
             </p>
           </div>
         </div>
 
-        {isLoading && <div className="text-3xl">Loading...</div>}
+        {isLoading && (
+          <div className="min-h-screen w-full text-center mt-6 md:mt-12 text-lg md:text-2xl">
+            Loading...
+          </div>
+        )}
+
         {token && (
-          <ul className="mt-12 grid xl:grid-cols-2 gap-6">
+          <ul className="mt-6 md:mt-12 grid xl:grid-cols-2 gap-4 md:gap-6">
             {places?.map((place, index) => {
               return (
                 <li
-                  className="bg-c-white rounded-[25px] shadow-card flex px-10 py-4"
+                  className="bg-c-white rounded md:rounded-[25px] shadow-card flex p-4 md:px-10 md:py-4"
                   key={index}
                 >
                   <div className="flex flex-col justify-between gap-2 w-full">
                     <div className="flex justify-between items-center">
-                      <p className="font-semibold text-[28px] text-c-textblack">
+                      <p className="font-semibold text-lg md:text-[28px] text-c-textblack">
                         {place.place_name}
                       </p>
 
@@ -89,21 +94,24 @@ export default function Bookmarks() {
                           setIsModalDeleteOpen(true);
                         }}
                       >
-                        <Bookmark size={32} fill="black" />
+                        <Bookmark
+                          className="w-6 h-6 md:w-8 md:h-8"
+                          fill="black"
+                        />
                       </button>
                     </div>
-                    <p className="text-lg text-c-textblack">
+                    <p className="text-sm md:text-lg text-c-textblack">
                       Harga Tiket Masuk: {place.price}
                     </p>
                     <a
                       rel="noreferrer"
                       target="_blank"
                       href={generateGoogleMapsLink(place.lat, place.long)}
-                      className="text-c-pink1 font-semibold text-xl underline"
+                      className="text-md md:text-xl text-c-pink1 font-semibold underline"
                     >
                       Google Maps
                     </a>
-                    <p className="text-xl text-c-grey2 mt-2 text-justify">
+                    <p className="text-md md:text-xl text-c-grey2 mt-2 text-justify">
                       {truncate(place.description)}
                       <span
                         className="cursor-pointer hover:font-semibold text-c-pink1 ml-2 transition-all"

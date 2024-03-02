@@ -99,7 +99,7 @@ export default function Homepage() {
               <select
                 name="type"
                 id="category"
-                className="text-sm md:text-lg text-c-pink1 font-medium"
+                className="text-sm md:text-lg text-c-pink1 font-medium max-md:w-full"
                 onChange={handleCategoryChange}
               >
                 <option value="Taman Hiburan" className="text-sm md:text-lg">
@@ -138,7 +138,7 @@ export default function Homepage() {
               <select
                 name="city"
                 id="city"
-                className="text-sm md:text-lg text-c-pink1 font-medium"
+                className="text-sm md:text-lg text-c-pink1 font-medium max-md:w-full"
                 onChange={handleCategoryChange}
               >
                 <option value="Jakarta" className="text-sm md:text-lg">
