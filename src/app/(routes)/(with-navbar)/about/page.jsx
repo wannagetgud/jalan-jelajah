@@ -34,10 +34,9 @@ export default function About() {
 
   const [sliderRef] = useKeenSlider(
     {
+      loop: true,
       slides: {
-        perView: 1,
         spacing: 15,
-        loop: true,
       },
     },
     [
@@ -73,7 +72,7 @@ export default function About() {
   );
 
   return (
-    <div className="overflow-hidden">
+    <div className="relative overflow-hidden">
       <div className="flex container mx-auto h-[90vh] justify-center">
         <div className="w-full xl:w-[544px] xl:mr-[132px] flex flex-col justify-center gap-8 relative z-10">
           <p className="text-lg md:text-xl xl:text-3xl font-medium">
@@ -124,8 +123,8 @@ export default function About() {
         />
       </div>
 
-      <div className="flex flex-col container mx-auto h-screen items-center">
-        <h1 className="font-semibold text-2xl md:text-4xl my-12 md:my-24">
+      <div className="flex flex-col container mx-auto h-screen md:items-center">
+        <h1 className="font-semibold text-2xl md:text-4xl my-16 md:my-24 text-center">
           Keunggulan kami
         </h1>
         <div className="grid grid-cols-3 gap-12 w-3/4 max-md:hidden">
@@ -133,10 +132,10 @@ export default function About() {
             <Card key={card.id} {...card} />
           ))}
         </div>
-        <div className="md:hidden px-8">
+        <div className="md:hidden">
           <div className="keen-slider" ref={sliderRef}>
             {cardContent.map((card) => (
-              <div key={card.id} className="keen-slider__slide">
+              <div key={card.id} className="keen-slider__slide !h-[300px]">
                 <Card {...card} />
               </div>
             ))}
@@ -149,7 +148,7 @@ export default function About() {
 
 const Card = ({ image, title, desc }) => {
   return (
-    <div className="rounded-2xl bg-white shadow-home p-4 md:p-10 flex flex-col gap-2 md:gap-6 items-center max-md:w-3/4 max-md:mx-auto">
+    <div className="rounded-2xl bg-white shadow-home p-4 md:p-10 flex flex-col gap-2 md:gap-6 items-center">
       <div className="flex items-center justify-center max-md:w-1/2">
         <Image src={image} width={168} height={168} alt="card image" />
       </div>
