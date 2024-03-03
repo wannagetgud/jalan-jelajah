@@ -159,7 +159,7 @@ export default function Homepage() {
               </select>
             </div>
             <Button
-              className="bg-c-pink1 flex items-center justify-center p-3 max-md:rounded-none max-md:w-full rounded-r-xl"
+              className="bg-c-pink1 flex items-center justify-center p-3 max-md:rounded-none max-md:rounded-b-xl max-md:w-full rounded-r-xl"
               onClick={() =>
                 fetchRecommendation("category", category, keyword, setRedirect)
               }
@@ -197,7 +197,7 @@ export default function Homepage() {
               )}
             </div>
             <Button
-              className="bg-c-pink1 flex items-center justify-center p-3 max-md:rounded-none max-md:w-full rounded-r-xl"
+              className="bg-c-pink1 flex items-center justify-center p-3 max-md:rounded-none max-md:rounded-b-xl max-md:w-full rounded-r-xl"
               onClick={() =>
                 fetchRecommendation("keyword", category, keyword, setRedirect)
               }
