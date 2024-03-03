@@ -96,9 +96,9 @@ export default function Profile() {
                 <div className="flex items-center max-md:w-[100px] relative">
                   <button
                     onClick={openEditModal}
-                    className="absolute -right-4 -top-4 z-10 aspect-square w-12 rounded-full bg-c-orange text-c-textwhite transition-all duration-300 hover:scale-110"
+                    className="absolute -right-2 -top-2 md:-right-4 md:-top-4 z-10 aspect-square w-6 md:w-12 rounded-full bg-c-orange text-c-textwhite transition-all duration-300 hover:scale-110"
                   >
-                    <Edit className="mx-auto w-8" />
+                    <Edit className="mx-auto w-4 md:w-8" />
                   </button>
                   <Image
                     src={localStorage.getItem(profilUrl) || profilUrl}

@@ -10,7 +10,7 @@ import DeletePopup from "@/app/_components/bookmarks/deleteModal";
 
 export default function Bookmarks() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState(1);
+  const [selectedPlace, setSelectedPlace] = useState();
 
   const [places, setPlaces] = useState([]);
 
@@ -39,13 +39,13 @@ export default function Bookmarks() {
     fetchBookmark();
   }, []);
 
-  const openDetailModal = (id) => {
-    setSelectedId(id);
+  const openDetailModal = (place) => {
+    setSelectedPlace(place);
     setIsModalOpen(true);
   };
 
   const closeDetailModal = (id) => {
-    setSelectedId(null);
+    setSelectedPlace(null);
     setIsModalOpen(false);
   };
 
@@ -115,7 +115,7 @@ export default function Bookmarks() {
                       {truncate(place.description)}
                       <span
                         className="cursor-pointer hover:font-semibold text-c-pink1 ml-2 transition-all"
-                        onClick={() => openDetailModal(place.id)}
+                        onClick={() => openDetailModal(place)}
                       >
                         Baca selengkapnya
                       </span>
@@ -128,8 +128,12 @@ export default function Bookmarks() {
         )}
       </div>
 
-      {isModalOpen && (
-        <DetailDest place={places[selectedId]} closeModal={closeDetailModal} />
+      {places && (
+        <DetailDest
+          recommendation={selectedPlace}
+          closeModal={closeDetailModal}
+          isModalOpen={isModalOpen}
+        />
       )}
     </>
   );

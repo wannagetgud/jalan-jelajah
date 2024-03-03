@@ -42,9 +42,9 @@ const DeletePopup = ({ isDeleting, placeId, onClose, token, refetch }) => {
         <div className="relative flex w-[500px] flex-col rounded-xl bg-c-white p-8 text-c-textblack">
           <button
             onClick={onClose}
-            className="absolute -right-4 -top-4 z-20 aspect-square w-12 rounded-full bg-c-pink1 text-c-textwhite transition-all duration-300 hover:scale-110"
+            className="absolute -right-2 -top-2 md:-right-4 md:-top-4 z-20 aspect-square w-8 md:w-12 rounded-full bg-c-pink1 text-c-textwhite transition-all duration-300 hover:scale-110"
           >
-            <X className="mx-auto w-8" />
+            <X className="mx-auto w-6 md:w-8" />
           </button>
 
           <h1 className="mb-4 text-2xl font-semibold max-md:text-lg">
