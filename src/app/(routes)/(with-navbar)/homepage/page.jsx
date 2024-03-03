@@ -169,7 +169,7 @@ export default function Homepage() {
           </div>
         ) : (
           <div className="rounded-xl bg-white shadow-home flex max-md:flex-col w-full justify-between">
-            <div className="px-4 py-4 h-full ml-0 md:ml-4">
+            <div className="px-4 py-4 md:h-24 ml-0 md:ml-4">
               <label className="text-sm md:text-base font-semibold mb-4">
                 Keyword tempat
               </label>

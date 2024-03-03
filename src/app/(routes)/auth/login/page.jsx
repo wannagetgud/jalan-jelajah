@@ -7,11 +7,12 @@ import Button from "@/app/_components/common/button";
 import InputBar from "@/app/_components/common/inputBar";
 import { AuthContext } from "@/app/_context/authContext";
 import { toast } from "react-toastify";
+import { CommonContext } from "@/app/_context/commonContext";
 
 export default function Login() {
   const { isLoggedIn, user, token, login, logout, isLoading } =
     useContext(AuthContext);
-
+  const { recommendation } = useContext(CommonContext);
   const router = useRouter();
   const [formData, setFormData] = useState({ username: "", password: "" });
 
@@ -39,7 +40,12 @@ export default function Login() {
       console.log(data);
       login(data);
       toast.success("Sukses login");
-      router.push("/homepage");
+
+      if (recommendation) {
+        router.push("/result");
+      } else {
+        router.push("/homepage");
+      }
     } catch (error) {
       toast.error(error.msg);
     }
