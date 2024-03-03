@@ -67,7 +67,7 @@ export default function Profile() {
   };
 
   const handleEditPicture = (url) => {
-    localStorage.setItem("profilUrl", data.url);
+    localStorage.setItem("profilUrl", url);
     setProfilUrl(url);
     closeEditModal();
     submitEditRef.current.click();
