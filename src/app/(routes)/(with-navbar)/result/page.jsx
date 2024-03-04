@@ -44,7 +44,7 @@ export default function Result() {
     }
 
     const requestBody = {
-      placeId: `${Math.floor(Math.random() * 10000) + 1000}${place.id}`, // create an id
+      placeId: place.id,
       category: place.category,
       city: place.city,
       description: place.description,
