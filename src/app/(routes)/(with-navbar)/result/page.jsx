@@ -65,7 +65,8 @@ export default function Result() {
         body: JSON.stringify(requestBody),
       });
       if (!response.ok) {
-        const data = response.json();
+        const data = await response.json();
+        console.log(data);
         throw new Error(data.msg);
       }
       const data = await response.json();
