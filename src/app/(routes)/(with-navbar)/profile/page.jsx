@@ -18,7 +18,8 @@ export default function Profile() {
   const [email, setEmail] = useState("Email");
   const [profilUrl, setProfilUrl] = useState("");
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const { user, isLoading, token, logout } = useContext(AuthContext);
+  const { user, isLoading, token, logout, editProfile } =
+    useContext(AuthContext);
   const { clearRecommendation } = useContext(CommonContext);
   useEffect(() => {
     if (user) {
@@ -42,12 +43,14 @@ export default function Profile() {
         body: JSON.stringify({ name, username, email, profilUrl }),
       });
 
-      const data = await response.json();
       if (!response.ok) {
+        const data = await response.json();
         toast.error(data.msg);
-      } else {
-        toast.success(data.msg);
       }
+
+      const data = await response.json();
+      editProfile(data);
+      toast.success(data.msg);
     } catch (error) {
       toast.error(error.msg);
     }
