@@ -35,7 +35,7 @@ export default function Register() {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error);
+        throw new Error(data.msg);
       }
 
       const data = await response.json();
@@ -44,7 +44,7 @@ export default function Register() {
       toast.success("Sukses daftar");
       router.push("/homepage");
     } catch (error) {
-      toast.error(error.msg);
+      toast.error(error.message);
     }
   };
 
